@@ -4,6 +4,7 @@ from astropy.time import Time, TimeDelta
 from astropy.coordinates import get_body, HeliocentricTrueEcliptic
 import numpy as np
 from numpy.linalg import norm
+import yaml
 
 
 def get_body_coord(name, t):
@@ -34,17 +35,8 @@ def get_body_vel(name, t):
 
 t = Time.now()
 
-masses = {
-    "sun": 1.989e30,
-    "mercury": 3.285e23,
-    "venus": 4.867e24,
-    "earth": 5.972e24,
-    "mars": 6.39e23,
-    "jupiter": 1.898e27,
-    "saturn": 5.683e26,
-    "uranus": 8.681e25,
-    "neptune": 1.024e26,
-}
+with open("masses.yaml") as f:
+    masses = yaml.safe_load(f)
 
 
 class Planet:
@@ -73,7 +65,7 @@ class Body:
 
 solarsystem = {}
 for b in masses.keys():
-    solarsystem[b] = Body(b, masses[b])
+    solarsystem[b] = Body(b, float(masses[b]))
 
 
 planets = {}

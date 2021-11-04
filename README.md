@@ -4,6 +4,7 @@
 
 - astropy: `pip install astropy`
 - matplotlib: `pip install matplotlib`
+- yaml: `pip install PyYAML`
 
 ## Run simulation
 
