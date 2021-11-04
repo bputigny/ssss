@@ -14,5 +14,6 @@
 
 - Space: play/pause simulation
 - Enter: show/hide labels
+- t: show/hide legend
 - Up/Down: speedup/slow down simulation
 - u: switch display unit (UA or meter)
