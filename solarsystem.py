@@ -52,9 +52,20 @@ class Body:
             t = Time.now()
         self.name = name
         self.mass = mass
-        self.x = get_body_coord(name, t)
-        self.v = get_body_vel(name, t)
+        try:
+            self.x = get_body_coord(name, t)
+            self.v = get_body_vel(name, t)
+        except KeyError:
+            self.x = None
+            self.v = None
+            # raise RuntimeError(
+            #     f"Cannot find {name} position and velocity, did you misspell it?"
+            # )
         # Force sun to center and 0 out velocity
+        if self.x is None:
+            raise ValueError(
+                f"Cannot find '{name}' position and velocity, did you misspell it?"
+            )
         if name == "sun":
             self.x[:] = np.zeros((3))
             self.v[:] = np.zeros((3))

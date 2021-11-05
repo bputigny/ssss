@@ -37,12 +37,19 @@ class Controller:
             r = get_viz_r()
             ax.set_xlim([-1.1 * r, 1.1 * r])
             ax.set_ylim([-1.1 * r, 1.1 * r])
-        elif event.key == "left" or event.key == "down":
-            if self.dt > one_day / 4.0:
-                self.dt -= one_day / 4.0
-        elif event.key == "right" or event.key == "up":
-            if self.dt < 7 * one_day:
-                self.dt += one_day / 4.0
+        elif event.key == "left":
+            self.dt -= one_day / 10.0
+        elif event.key == "down":
+            self.dt -= one_day
+        elif event.key == "right":
+            self.dt += one_day / 10.0
+        elif event.key == "up":
+            self.dt += one_day
+
+        if self.dt >= 30 * one_day:
+            self.dt = 30 * one_day
+        if self.dt < 0:
+            self.dt = 0
 
 
 def update(i, lines):
@@ -128,7 +135,7 @@ if __name__ == "__main__":
     if platform.system() == "Darwin":
         blit = False
     ani = FuncAnimation(
-        fig, update, blit=blit, interval=5, repeat=False, fargs=(lines,)
+        fig, update, blit=blit, interval=1, repeat=False, fargs=(lines,)
     )
 
     plt.show()

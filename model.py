@@ -21,6 +21,9 @@ def timestep(dt):
     """
     Update planets position and velocities after one time step (dt: sec)
     """
-    for name in planets.keys():
-        planets[name].v += accel(planets[name].m, planets[name].x) * dt
-        planets[name].x += planets[name].v * dt
+    nt = 10
+    dt = dt / float(nt)
+    for name, planet in planets.items():
+        for _ in range(nt):
+            planet.v += accel(planet.m, planet.x) * dt
+            planet.x += planet.v * dt
