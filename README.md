@@ -17,3 +17,4 @@
 - t: show/hide legend
 - Up/Down: speedup/slow down simulation
 - u: switch display unit (UA or meter)
+- d: switch draw option (keep old positions)

@@ -22,6 +22,7 @@ class Controller:
         self.pause = True
         self.show_labels = True
         self.show_legend = True
+        self.draw = False
         self.unit = 0
 
     def on_press(self, event):
@@ -32,6 +33,8 @@ class Controller:
             self.show_labels ^= True
         elif event.key == "t":
             self.show_legend ^= True
+        elif event.key == "d":
+            self.draw ^= True
         elif event.key == "u":
             self.unit = (self.unit + 1) % len(units)
             r = get_viz_r()
@@ -67,10 +70,21 @@ def update(i, lines):
     vel = f"{'sun':7}: {0:4.2e} m/s"
     lines[0].set_label(vel)
     for name in planets.keys():
-        lines[n].set_data(
-            planets[name].x[0] / units[ctrl.unit]["scale"],
-            planets[name].x[1] / units[ctrl.unit]["scale"],
-        )
+        if ctrl.draw:
+            xs, ys = lines[n].get_data()
+        else:
+            xs = []
+            ys = []
+        xs.append(planets[name].x[0] / units[ctrl.unit]["scale"])
+        ys.append(planets[name].x[1] / units[ctrl.unit]["scale"])
+
+        lines[n].set_data(xs, ys)
+        if ctrl.draw:
+            lines[n].set_linestyle("-")
+            lines[n].set_marker(",")
+        else:
+            lines[n].set_linestyle("")
+            lines[n].set_marker(".")
         vel = f"{name:7}: {norm(planets[name].v):4.2e} m/s"
         lines[n].set_label(vel)
         if ctrl.show_labels:
