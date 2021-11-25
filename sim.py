@@ -3,7 +3,6 @@ Simple Solar System Simulation: User interface module
 """
 from model import planets, timestep
 
-import platform
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from astropy.time import Time, TimeDelta
@@ -106,7 +105,7 @@ def update(i, lines):
     elif ax.get_legend():
         ax.get_legend().remove()
 
-    return (lines,)
+    return lines
 
 
 def get_viz_r():
@@ -119,8 +118,6 @@ def get_viz_r():
 
 
 if __name__ == "__main__":
-
-    print(platform.system())
 
     plt.style.use("dark_background")
 
@@ -145,11 +142,8 @@ if __name__ == "__main__":
 
     fig.canvas.mpl_connect("key_press_event", ctrl.on_press)
 
-    blit = True
-    if platform.system() == "Darwin":
-        blit = False
     ani = FuncAnimation(
-        fig, update, blit=blit, interval=1, repeat=False, fargs=(lines,)
+        fig, update, blit=False, interval=1, repeat=False, fargs=(lines,)
     )
 
     plt.show()
